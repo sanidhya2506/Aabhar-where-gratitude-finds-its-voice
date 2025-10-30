@@ -44,7 +44,7 @@ The website consists of three main pages:
 ## ✨ Why This Project?
 
 This wasn’t built just to showcase skills — it was built as a **reminder of gratitude**.  
-Mentors like **Striver, Shradha Khapra, Arsh Goyal, Kushal Vijay, Rohit Negi, Bharat Sahu**, and many others quietly shaped my mindset, approach, and confidence.
+Mentors like **Striver, Shradha Khapra, Arsh Goyal, Kushal Vijay, Rohit Negi,LinkedIn connections, and Academic Mentors**, and many others quietly shaped my mindset, approach, and confidence.
 
 > “Inspired by Mentors. Built by Learners.”
 
