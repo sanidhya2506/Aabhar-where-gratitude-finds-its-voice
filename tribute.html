@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>आभार | Echoes of Gratitude</title>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --primary-color: #06B6D4;
+      --primary-color-darker: #0d9488;
+      --dark-bg: #111827;
+      --dark-text: #e5e7eb;
+      --dark-card: #1f2937;
+      --dark-header-bg: #111827b3;
+      --dark-shadow: rgba(0, 0, 0, 0.2);
+      --light-bg: #f3f4f6;
+      --light-text: #1f2937;
+      --light-card: #ffffff;
+      --light-header-bg: #f3f4f6b3;
+      --light-shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Make body fill the screen and allow footer to stick to bottom */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Push footer to the bottom */
+    footer {
+      margin-top: auto;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      scroll-behavior: smooth;
+    }
+
+    .theme-dark {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .theme-light {
+      background-color: var(--light-bg);
+      color: var(--light-text);
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+
+    .theme-dark header {
+      background-color: var(--dark-header-bg);
+      box-shadow: 0 2px 6px var(--dark-shadow);
+    }
+
+    .theme-light header {
+      background-color: var(--light-header-bg);
+      box-shadow: 0 2px 6px var(--light-shadow);
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      letter-spacing: 0.5px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--primary-color);
+    }
+
+    .toggle-btn {
+      background: none;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 1rem;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .toggle-btn:hover {
+      background-color: rgba(6, 182, 212, 0.1);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--primary-color);
+      margin: 4px 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    @media (max-width:768px) {
+      header {
+        padding: 0.8rem 1.5rem;
+      }
+
+      nav {
+        position: fixed;
+        top: 65px;
+        right: -100%;
+        flex-direction: column;
+        background: var(--dark-card);
+        padding: 1.5rem;
+        border-radius: 10px;
+        width: min(80%, 250px);
+        transition: right 0.3s ease;
+        box-shadow: 0 4px 10px var(--dark-shadow);
+      }
+
+      .theme-light nav {
+        background: var(--light-card);
+      }
+
+      nav.active {
+        right: 15px;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav a {
+        margin: 0.6rem 0;
+        width: 100%;
+      }
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 5rem;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 850px;
+      text-align: center;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 2.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    p {
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .professor-section {
+      margin-bottom: 3rem;
+      width: 100%;
+      max-width: 850px;
+    }
+
+    .prof-card {
+      background-color: var(--dark-card);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 6px var(--dark-shadow);
+      text-align: center;
+    }
+
+    .theme-light .prof-card {
+      background-color: var(--light-card);
+      box-shadow: 0 4px 6px var(--light-shadow);
+    }
+
+    .prof-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      background-color: var(--primary-color);
+      color: #fff;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary-color-darker);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    @keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+.pulse-icon {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+@media (max-width: 768px) {
+  .logo {
+    font-size: 1rem;
+    max-width: 70%;
+    word-wrap: break-word;
+    margin-right: 2rem;
+  }
+
+  header {
+    padding: 0.8rem 1rem;
+  }
+}
+
+
+  </style>
+</head>
+
+<body class="theme-dark">
+  <header>
+    <div class="logo">आभार — Where Gratitude Finds Its Voice</div>
+    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="mentor.html">Mentors</a>
+      <a href="tribute.html">Tribute</a>
+      <button class="toggle-btn" id="themeToggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="professor-section space-y-8">
+<h2 class="text-4xl font-bold text-cyan-400 mb-10 text-center mt-12 animate-pulse">
+  Guiding Lights at University
+</h2>
+
+
+
+<!-- Professors Section Container -->
+<div class="flex flex-col md:flex-row md:flex-wrap justify-center gap-6">
+
+  <!-- Devendra Tiwari Sir -->
+  <div class="prof-card rounded-2xl p-6 shadow-md hover:shadow-cyan-500/10 transition duration-300 w-full md:w-[45%]">
+    <h3 class="text-xl font-bold text-cyan-300">Dr. Devendra Tiwari Sir</h3>
+    <p class="mt-2">
+      Always grateful to <strong>Dr. Devendra Tiwari sir</strong> for his constant guidance and support — 
+      from academics to projects, he has been a true mentor who encouraged me to learn deeply and think creatively.
+    </p>
+    <a href="https://www.linkedin.com/in/devendra-tiwari-9a26b0134/" target="_blank"
+      class="inline-flex justify-center items-center gap-2 text-cyan-400 hover:text-cyan-300 mt-3 transition">
+      <i data-lucide="linkedin" class="w-5 h-5"></i> Connect on LinkedIn
+    </a>
+  </div>
+
+  <!-- Karanjeet Kaur Ma’am -->
+  <div class="prof-card rounded-2xl p-6 shadow-md hover:shadow-cyan-500/10 transition duration-300 w-full md:w-[45%]">
+    <h3 class="text-xl font-bold text-cyan-300">Dr. Karanjeet Kaur Ma’am</h3>
+    <p class="mt-2">
+      <strong>Dr. Karanjeet Kaur ma’am</strong> believed in my potential and guided me to shape my project into 
+      something more impactful and product-oriented. Her trust and mentorship truly strengthened my journey.
+    </p>
+    <a href="https://www.linkedin.com/feed/" target="_blank"
+      class="inline-flex justify-center items-center gap-2 text-cyan-400 hover:text-cyan-300 mt-3 transition">
+      <i data-lucide="linkedin" class="w-5 h-5"></i> Connect on LinkedIn
+    </a>
+  </div>
+
+  <!-- Guides Behind My Growth -->
+  <div class="prof-card rounded-2xl p-6 shadow-md hover:shadow-cyan-500/10 transition duration-300 w-full md:w-[93%]">
+    <h3 class="text-xl font-bold text-cyan-300">Guides Behind My Growth</h3>
+    <p class="mt-2">
+      Grateful to all my respected teachers from the <strong>Computer Science & Engineering Department</strong> — 
+      <strong>Dr. Sudhir Bhardwaj</strong>, <strong>Dr. Kapil Pandey</strong>, 
+      <strong>Mr. Jai Bhaskar</strong>, <strong>Dr. Devendra Daila</strong>, 
+      <strong>Dr. Dharmendra Yadav</strong>, <strong>Mr. Kartar Singh</strong>, 
+      <strong>Mr. Abhishek Purohit</strong>, <strong>Dr. Parbant Singh Sandhu</strong>, 
+      <strong>Dr. Laxman Singh Khangarot</strong>, <strong>Dr. Y. N. Singh</strong>, and 
+      <strong>Mr. Sandeep Kumar Sir</strong>; along with 
+      <strong>Dr. Gayatri Sharma</strong>, <strong>Dr. Annu Sharma</strong>, 
+      <strong>Ms. Neeraj Choudhary</strong>, <strong>Ms. Gagandeep Kaur</strong>, 
+      <strong>Dr. Preeti Pareek</strong>, and <strong>Ms. Bhumika Chopra Ma’am</strong> — 
+      for their constant guidance, support, and encouragement throughout my journey.
+    </p>
+  </div>
+
+</div>
+
+
+    <div class="container space-y-6">
+ <h2 class="text-4xl font-bold text-cyan-400 mb-10 text-center mt-12 animate-pulse">
+  Echoes of Gratitude
+</h2>
+<p>
+  <i data-lucide="heart-handshake" class="inline w-5 h-5 text-cyan-400 mr-1 pulse-icon"></i>
+  This project began as a heartfelt tribute — a way to thank those mentors who lit the path for countless learners, including me.
+</p>
+
+<p>
+  <i data-lucide="lightbulb" class="inline w-5 h-5 text-cyan-400 mr-1 pulse-icon"></i>
+  Every line of code I write holds traces of countless voices — lessons, ideas, and inspirations that quietly built me along the way.
+</p>
+
+
+<p>
+  <i data-lucide="infinity" class="inline w-5 h-5 text-cyan-400 mr-1 pulse-icon"></i>
+  I built this not to showcase my work, but to remind myself that no one grows alone — every milestone we reach is an echo of someone’s guidance.
+</p>
+
+
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/sanidhya-sharma-22ba91237/" target="_blank">
+          <i data-lucide="linkedin"></i> LinkedIn
+        </a>
+        <a href="https://github.com/sanidhya2506" target="_blank">
+          <i data-lucide="github"></i> GitHub
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Coded with <span style="color: var(--primary-color);" class="animate-pulse">♡</span> by 
+    <strong>Sanidhya Sharma</strong>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const toggleBtn = document.getElementById('themeToggle');
+    const body = document.body;
+    const icon = toggleBtn.querySelector('i');
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('theme-dark');
+      body.classList.toggle('theme-light');
+      const isDark = body.classList.contains('theme-dark');
+      icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+    });
+
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuToggle.classList.toggle('open');
+    });
+
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navMenu.classList.remove('active');
+          menuToggle.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

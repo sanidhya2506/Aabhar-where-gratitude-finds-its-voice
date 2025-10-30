@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>आभार | The Code Behind My Confidence</title>
+
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #06B6D4;
+      --primary-color-darker: #0d9488;
+      --dark-bg: #111827;
+      --dark-text: #e5e7eb;
+      --dark-card: #1f2937;
+      --dark-header-bg: #111827b3;
+      --dark-shadow: rgba(0, 0, 0, 0.2);
+      --light-bg: #f3f4f6;
+      --light-text: #1f2937;
+      --light-card: #ffffff;
+      --light-header-bg: #f3f4f6b3;
+      --light-shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    .theme-dark { background-color: var(--dark-bg); color: var(--dark-text); }
+    .theme-light { background-color: var(--light-bg); color: var(--light-text); }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+
+    .theme-dark header { background-color: var(--dark-header-bg); box-shadow: 0 2px 6px var(--dark-shadow); }
+    .theme-light header { background-color: var(--light-header-bg); box-shadow: 0 2px 6px var(--light-shadow); }
+
+    .logo { font-weight: 700; font-size: 1.3rem; color: var(--primary-color); letter-spacing: 0.5px; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover, nav a.active { color: var(--primary-color); }
+
+    .toggle-btn {
+      background: none;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 1rem;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .toggle-btn:hover { background-color: rgba(6,182,212,0.1); }
+
+    .menu-toggle { display: none; flex-direction: column; cursor: pointer; }
+    .menu-toggle span {
+      width: 25px; height: 3px; background: var(--primary-color);
+      margin: 4px 0; transition: all 0.3s ease;
+    }
+
+    .menu-toggle.open span:nth-child(1) { transform: rotate(-45deg) translate(-5px,6px); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) { transform: rotate(45deg) translate(-5px,-6px); }
+
+    @media (max-width:768px) {
+      header { padding: 0.8rem 1.5rem; }
+      nav {
+        position: fixed;
+        top: 65px; right: -100%;
+        flex-direction: column;
+        background: var(--dark-card);
+        padding: 1.5rem;
+        border-radius: 10px;
+        width: min(80%,250px);
+        transition: right 0.3s ease;
+        box-shadow: 0 4px 10px var(--dark-shadow);
+      }
+      .theme-light nav { background: var(--light-card); }
+      nav.active { right: 15px; }
+      .menu-toggle { display: flex; }
+      nav a { margin: 0.6rem 0; width: 100%; }
+    }
+
+    /* ===== MENTORS SECTION ===== */
+    .mentor-section {
+      max-width: 950px;
+      margin: 8rem auto 3rem auto;
+      padding: 2rem;
+    }
+    .mentor {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      border-bottom: 1px solid #374151;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .mentor img {
+      width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
+    }
+    .mentor-content h2 { color: var(--primary-color); margin-bottom: 0.4rem; }
+
+    .resource-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .resource-links a {
+      color: var(--primary-color);
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .resource-links a:hover {
+      color: var(--primary-color-darker);
+      transform: scale(1.1);
+    }
+
+    /* ===== FLIP CARD SECTION ===== */
+    .flip-section {
+      text-align: center;
+      max-width: 1100px;
+      margin: 3rem auto;
+      padding: 2rem;
+    }
+
+    .flip-section h2 {
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+
+    .flip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      justify-items: center;
+    }
+
+    .flip-card {
+      background: transparent;
+      perspective: 1000px;
+      width: 260px;
+      height: 330px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .flip-card-front {
+      background: var(--dark-card);
+      color: var(--dark-text);
+    }
+
+    .theme-light .flip-card-front {
+      background: var(--light-card);
+      color: var(--light-text);
+    }
+
+    .flip-card-front img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    .flip-card-front h3 {
+      color: var(--primary-color);
+      margin-bottom: 0.3rem;
+    }
+
+    .flip-card-back {
+      background: var(--primary-color);
+      color: #fff;
+      transform: rotateY(180deg);
+      font-size: 0.95rem;
+      padding: 1.5rem;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 3rem;
+    }
+
+    .theme-dark ul li {
+  color: #d1d5db; /* light gray for dark mode */
+}
+
+.theme-light ul li {
+  color: #374151; /* darker gray for light mode */
+}
+@media (max-width: 768px) {
+  .logo {
+    font-size: 1rem;
+    max-width: 70%;
+    word-wrap: break-word;
+    margin-right: 2rem;
+  }
+
+  header {
+    padding: 0.8rem 1rem;
+  }
+}
+
+
+
+
+
+  </style>
+</head>
+
+<body class="theme-dark">
+  <header>
+    <div class="logo">आभार — Where Gratitude Finds Its Voice</div>
+    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="mentor.html">Mentors</a>
+      <a href="tribute.html">Tribute</a>
+      <button class="toggle-btn" id="themeToggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </nav>
+  </header>
+<!-- ===== MENTOR SECTION ===== -->
+<section class="mentor-section">
+<h2 class="text-5xl font-extrabold text-center mb-10 text-cyan-400 animate-pulse">
+  The Code Behind My Confidence
+</h2>
+
+
+<div class="mentor">
+  <img src="https://media.licdn.com/dms/image/v2/C4D03AQGFTnOaQa4fUQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1623400654607?e=1763596800&v=beta&t=Frn9X9ctBZharbcJSUQUCy4_CIz7LM6TZ_z7VttI0BY" alt="Striver">
+  <div class="mentor-content">
+    <h2>Raj Vikramaditya (Striver)</h2>
+    <h3 class="text-sm text-gray-400 mb-2">Founder of TakeUForward · Ex-Google</h3>
+    <p><strong>Striver</strong> is one of India’s most respected educators in the programming and DSA community. As the founder of <strong>TakeUForward</strong> and an ex-Google engineer, he has guided millions through his structured and concept-driven teaching.</p>
+    <ul class="list-disc list-inside text-gray-300 mt-3 space-y-1">
+      <li>Redefined how I approach problem-solving in DSA.</li>
+      <li>His calm teaching style made complex topics feel easy and logical.</li>
+      <li><strong>TakeUForward</strong> playlists became my daily motivation.</li>
+      <li>Taught me that DSA isn’t about memorization — it’s about understanding patterns.</li>
+    </ul>
+    <div class="resource-links mt-3">
+      <a href="https://github.com/striver79" target="_blank" title="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+      <a href="https://www.linkedin.com/in/rajstriver/" target="_blank" title="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+      <a href="https://takeuforward.org" target="_blank" title="Website"><i data-lucide="globe" class="w-5 h-5"></i></a>
+      <a href="https://www.youtube.com/c/takeUforward" target="_blank" title="YouTube"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="mentor">
+  <img src="https://media.licdn.com/dms/image/v2/D5603AQH3OXCs5a05Og/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1706903307026?e=1763596800&v=beta&t=iN5H8RsCypAVPHikwk7BsU-jHY5u7sZiQZpkqZA8pNw" alt="Arsh Goyal">
+  <div class="mentor-content">
+    <h2>Arsh Goyal</h2>
+    <h3 class="text-sm text-gray-400 mb-2">Software Engineer · Educator · Mentor</h3>
+    <p><strong>Arsh Goyal</strong> is one of LinkedIn’s most influential tech mentors — known for helping students with placements, learning strategies, and career advice.</p>
+    <ul class="list-disc list-inside text-gray-300 mt-3 space-y-1">
+      <li>Became my go-to source of motivation for placement preparation.</li>
+      <li>Taught me to stay patient and strategic, even when progress felt slow.</li>
+      <li>Connected technical learning with confidence and consistency.</li>
+      <li>Inspired me to one day guide others — just like he does.</li>
+    </ul>
+    <div class="resource-links mt-3">
+      <a href="https://github.com/ArshGoyal" target="_blank" title="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+      <a href="https://www.linkedin.com/in/arshgoyal" target="_blank" title="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+      <a href="https://www.proelevate.in/dsa-practice/arsh-dsa-sheet" target="_blank" title="Website"><i data-lucide="globe" class="w-5 h-5"></i></a>
+      <a href="https://www.youtube.com/@ArshGoyal" target="_blank" title="YouTube"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="mentor">
+  <img src="https://media.licdn.com/dms/image/v2/D5603AQH4L8B4muZ2eg/profile-displayphoto-shrink_800_800/B56ZaMpdTxHAAg-/0/1746116401181?e=1763596800&v=beta&t=AvBd9ah3B_I3l_9yf8xnjjsueGeaAkScyp0uyWSS0m4" alt="Kushal Vijay">
+  <div class="mentor-content">
+    <h2>Kushal Vijay</h2>
+    <h3 class="text-sm text-gray-400 mb-2">Software Engineer · YouTuber</h3>
+    <p><strong>Kushal Vijay</strong> is a tech mentor and YouTuber who shares internship updates and career guidance, motivating students to stay proactive.</p>
+    <ul class="list-disc list-inside text-gray-300 mt-3 space-y-1" >
+      <li>Encouraged me to seek opportunities rather than wait for them.</li>
+      <li>Taught me that humility and consistency define true success.</li>
+      <li>His content kept me motivated and grounded throughout my journey.</li>
+      <li>Showed me the value of community-driven growth.</li>
+    </ul>
+    <div class="resource-links mt-3">
+      <a href="https://github.com/KushalVijay" target="_blank" title="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+      <a href="https://www.linkedin.com/in/kushalvijay" target="_blank" title="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+      <a href="https://docs.google.com/document/d/191SztRqM-WrO7-EZbrrIOfy9h-9GzPOjTB62ni0nrQI/edit?tab=t.0" target="_blank" title="Website"><i data-lucide="globe" class="w-5 h-5"></i></a>
+      <a href="https://www.youtube.com/@KushalVijay" target="_blank" title="YouTube"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="mentor">
+  <img src="https://media.licdn.com/dms/image/v2/D5603AQF-INQX5DiLEw/profile-displayphoto-shrink_200_200/B56ZgIDZ_PGUAc-/0/1752481771806?e=1763596800&v=beta&t=SfxJaJGNEDEFNB82MIi1LjdmXiaSYJIvul5TZQPlYEM" alt="Shradha Khapra">
+  <div class="mentor-content">
+    <h2>Shradha Khapra</h2>
+    <h3 class="text-sm text-gray-400 mb-2">Co-Founder of Apna College · Ex-Microsoft</h3>
+    <p><strong>Shradha Khapra</strong> is a leading educator and co-founder of <strong>Apna College</strong>, known for making Computer Science learning approachable and inspiring.</p>
+    <ul class="list-disc list-inside text-gray-300 mt-3 space-y-1">
+      <li>Made me truly enjoy learning Computer Science.</li>
+      <li>Helped me stay consistent and confident in my studies.</li>
+      <li>Her lessons on effort and clarity guide me even today.</li>
+      <li>Showed that big dreams grow from small, consistent steps.</li>
+    </ul>
+    <div class="resource-links mt-3">
+      <a href="https://github.com/shradha-khapra" target="_blank" title="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+      <a href="https://www.linkedin.com/in/shradha-khapra/" target="_blank" title="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+      <a href="https://www.apnacollege.in" target="_blank" title="Website"><i data-lucide="globe" class="w-5 h-5"></i></a>
+      <a href="https://www.youtube.com/c/ApnaCollegeOfficial" target="_blank" title="YouTube"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="mentor">
+  <img src="https://media.licdn.com/dms/image/v2/D5603AQGK1b2Cqjs2rA/profile-displayphoto-shrink_800_800/B56ZcRn.tXHgAc-/0/1748347385376?e=1763596800&v=beta&t=L7s6MxUvK6M9taORMnhjuMz3gPX3wm1Ii1O4DauI2dA" alt="Rohit Negi">
+  <div class="mentor-content">
+    <h2>Rohit Negi</h2>
+    <h3 class="text-sm text-gray-400 mb-2">Founder of Coder Army · Ex-SDE at Uber</h3>
+    <p><strong>Rohit Negi</strong> is the founder of <strong>Coder Army</strong>, a community that inspires thousands of students to grow in tech with consistency, curiosity, and confidence.</p>
+    <ul class="list-disc list-inside text-gray-300 mt-3 space-y-1">
+      <li>His energy and teaching style always make learning feel engaging and fun.</li>
+      <li>Watching his sessions on tech and AI motivated me to explore new areas with excitement.</li>
+      <li>He creates an environment where every learner feels capable of achieving something big.</li>
+      <li>Truly appreciate the positivity and drive he brings to the coding community.</li>
+    </ul>
+    <div class="resource-links mt-3">
+      <a href="https://www.linkedin.com/in/rohit-negi9/" target="_blank" title="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+      <a href="https://coderarmy.in" target="_blank" title="Website"><i data-lucide="globe" class="w-5 h-5"></i></a>
+      <a href="https://www.youtube.com/@Rohit_Negi" target="_blank" title="YouTube"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+    </div>
+  </div>
+</div>
+
+
+
+
+</section>
+
+
+<section class="flip-section py-16">
+  <h2 class="text-5xl font-extrabold text-center mb-6 text-cyan-400 animate-pulse">
+    The Source Code of My Growth
+  </h2>
+</section>
+
+  <div class="flip-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-6">
+  
+
+   
+    <!-- Connection 1 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="http://media.licdn.com/dms/image/v2/D4D03AQE5fo2P8vTokA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1669655709775?e=1763596800&v=beta&t=5mKC7hIMMvd0CWpZA1qWSgdL-PxmDRgcbF_u3fMhHYQ" alt="Khushboo Sharma" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Khushboo Sharma</h3>
+          <p class="text-gray-400">Data Engineer @ Target</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/khushboo-sharma-coderblood/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Khushboo inspired me to explore the data-driven side of software engineering and stay curious.</p>
+           <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/khushboo-sharma-coderblood/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <!-- Connection 2 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="http://media.licdn.com/dms/image/v2/D5603AQEa4CjDHRVr-w/profile-displayphoto-crop_800_800/B56ZmP7LXcI4AI-/0/1759056279515?e=1763596800&v=beta&t=O016w_oJBzJzC-IM55SNCoqymyiM0pUsomKkR8WKu4M" alt="Saumya Singh" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Saumya Singh</h3>
+          <p class="text-gray-400">Remote Software Engineer</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/saumya1singh/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Saumya introduced me to open source and made collaboration on GitHub fun and rewarding.</p>
+                    <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/saumya1singh/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection 3 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="http://media.licdn.com/dms/image/v2/D5603AQHO_ym3ftIp8w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1728465054073?e=1763596800&v=beta&t=LwYqDmoEdee3gqyYvJn-SBzzvUkWgV7S22G-9hvJk5g" alt="Abhishek Krishna" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Abhishek Krishna</h3>
+          <p class="text-gray-400">Applied Scientist-II @ Amazon</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/abhikrishna24/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Abhishek once reviewed my CV and shared valuable insights on improving it for top tech roles.</p>
+           <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/abhikrishna24/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- Connection 4 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="https://media.licdn.com/dms/image/v2/D5603AQFLDt_MRN24uw/profile-displayphoto-crop_800_800/B56ZmtrTiqH8AM-/0/1759555437732?e=1763596800&v=beta&t=hmAp_0dVBF7RlT3YhSy8kQVzmLtzxAhYsgI86iIgjcM" alt="Ashish Ranjan" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Ashish Ranjan</h3>
+          <p class="text-gray-400">Application Developer at IBM</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/ashishranjan02/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Ashish guided me through interview preparation and resume building, helping me apply with confidence.</p>
+           <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/ashishranjan02/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection 5 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="https://media.licdn.com/dms/image/v2/D5603AQHhFCdXSb3sTw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1728227607990?e=1763596800&v=beta&t=pPcMHjYbL1J8G35gv8LwKdKcuNyTrrmL3obd_NNST9I" alt="Shivam Shrivastava" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Shivam Shrivastava</h3>
+          <p class="text-gray-400">SWE - ML @ Google</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/shivam-shrivastava-ab6404179/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Shivam’s AI and ML content motivated me to dive deeper into machine learning and innovation.</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/shivam-shrivastava-ab6404179/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection 6 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="https://media.licdn.com/dms/image/v2/D5603AQEHyAIe4qiXqw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1696708066143?e=1763596800&v=beta&t=iPCRQ-x-9RRkUbyE1Nf6tnjgzgX3PKut8PXmIK4dCCg" alt="Bharat Sahu" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Bharat Sahu</h3>
+          <p class="text-gray-400">Applied Scientist-II @ Amazon</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/bharat-sahu-ba425b142/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Bharat shared a glimpse into Amazon’s hiring process and encouraged me with honest insights about how to grow and prepare for such roles.</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/bharat-sahu-ba425b142/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection 7 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="https://media.licdn.com/dms/image/v2/D5603AQGwznLsyFSEcQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724669271462?e=1763596800&v=beta&t=StbSjbHravtETCjneiOyPH0MZ1xVoczvAt7ppzytM2o" alt="Navyaa Sharma" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Navyaa Sharma</h3>
+          <p class="text-gray-400">Software Engineer @ Google</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/navyaa-sharma-here/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Navyaa’s posts about tech and hackathons always inspire me to participate and build creatively.</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/navyaa-sharma-here/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection 8 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="https://media.licdn.com/dms/image/v2/D4D03AQGB44zd7uZlYw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1695908009708?e=1763596800&v=beta&t=jK-JeBgqMa_gej6okca7ohqq_lkGkdgnohrH9Oti4ck" alt="Naveen Rawat" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Naveen Rawat</h3>
+          <p class="text-gray-400">SWE @ Google</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/naveen-rawat-100/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Naveen shared great insights about Google’s culture and student opportunities in tech.</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/naveen-rawat-100/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection 9 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="https://media.licdn.com/dms/image/v2/D4D03AQGGhZ23viUAFw/profile-displayphoto-crop_800_800/B4DZlXSUh6IYAM-/0/1758106046326?e=1763596800&v=beta&t=X-ph4UBr9_0d8lR4D0aLNc2VeFRe6vjHPlFHDsNet0o" alt="Utkarsh Raj" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Utkarsh Raj</h3>
+          <p class="text-gray-400">Senior System Engineer @ Infinite</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/utpy/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Utkarsh helped me understand the impact of DSA and competitive programming in interviews.</p>
+           <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/utpy/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection 10 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="https://media.licdn.com/dms/image/v2/D5603AQGr152vRNVetg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1704265914253?e=1763596800&v=beta&t=gjd5uxFmBPBv1y6YwB8ENYU5eqvMuO8ShbnZHAp62zM" alt="Gourav Sharma" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Gourav Sharma</h3>
+          <p class="text-gray-400">Customer Success Engineer @ HashiCorp</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/ping2gouravsharma/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Gourav shared valuable experiences from the tech industry that broadened my perspective.</p>
+            <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/ping2gouravsharma/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Connection 13 -->
+<div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+  <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+    <!-- Front -->
+    <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+      <img src="https://media.licdn.com/dms/image/v2/D4D03AQEvEUc7WASnlg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1676792507999?e=1763596800&v=beta&t=TPfrwChyk4M3xZvvHbmp0Ay8EuzPU31veZtR3JzH3gc" alt="Onkar Viralekar" class="w-32 h-32 rounded-full object-cover mb-4">
+      <h3 class="text-xl font-semibold text-white">Onkar Viralekar</h3>
+      <p class="text-gray-400">Data Scientist @ PhonePe</p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/onkar-viralekar-07a104192/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+      <p class="text-gray-300 text-center">
+        Onkar encouraged me to keep learning and applying new technologies through hands-on work.
+      </p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/onkar-viralekar-07a104192/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Connection 12 -->
+<div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+  <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+    <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQHUWQ__WvhMUA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1701775623161?e=1763596800&v=beta&t=NaQoupOQP0VISS7adPColcbfaoQPdEBew1ur2R2UCSY" alt="Dhruv Sharma" class="w-32 h-32 rounded-full object-cover mb-4">
+      <h3 class="text-xl font-semibold text-white">Dhruv Sharma</h3>
+      <p class="text-gray-400">Data Scientist @ Uber</p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/dhruv4722/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+    <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+      <p class="text-gray-300 text-center">
+        Dhruv shared valuable insights about tech roles and guided me whenever I reached out for professional advice and opportunities.
+              <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/dhruv4722/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Connection 13 -->
+<div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+  <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+    <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQEMzvcm7uUNFQ/profile-displayphoto-shrink_800_800/B56ZVtNFPSGUAg-/0/1741293903421?e=1763596800&v=beta&t=zGpcLLI_IUNZZruiRVddeu6TvanyFzv_wDjJXJnEX4Y" alt="Shivam Garg" class="w-32 h-32 rounded-full object-cover mb-4">
+      <h3 class="text-xl font-semibold text-white">Shivam Garg</h3>
+      <p class="text-gray-400">SWE-III @ Google </p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/shivam-garg-a69853194/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+    <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+      <p class="text-gray-300 text-center">
+        Shivam is passionate about mentoring students and often shares valuable learning opportunities.
+              <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/shivam-garg-a69853194/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+      </p>
+    </div>
+  </div>
+</div>
+<!-- Connection 14 -->
+<div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+  <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+    <!-- Front -->
+    <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQGRIayV2v1gDw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1731253263857?e=1763596800&v=beta&t=dhrDAiIO2CbY7knYmXV48wguZ28RQqIJgCDsPijEo4w" alt="Sakshi Chhabra" class="w-32 h-32 rounded-full object-cover mb-4">
+      <h3 class="text-xl font-semibold text-white">Sakshi Chhabra</h3>
+      <p class="text-gray-400">Software Engineer III @ Google</p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/sakshi8699/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+      <p class="text-gray-300 text-center">
+        Sakshi helped me strengthen my DSA concepts and guided me on the types of problems commonly asked in Google interviews.
+      </p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/sakshi8699/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Connection 15 -->
+<div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+  <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+    <!-- Front -->
+    <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQFQnjhsymoEvw/profile-displayphoto-crop_800_800/B56ZlDNT.THUAI-/0/1757769187938?e=1763596800&v=beta&t=4m7q9DTAjxK-xr8TpK4qyakDZJd8c2MGIqTJn9SPNog" alt="Nancy Solanki" class="w-32 h-32 rounded-full object-cover mb-4">
+      <h3 class="text-xl font-semibold text-white">Nancy Solanki</h3>
+      <p class="text-gray-400">Software Engineer @ Microsoft</p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/nancy-solanki/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+      <p class="text-gray-300 text-center">
+       Nancy’s content is motivating and filled with practical insights for students and aspiring engineers, making learning in tech feel inspiring and achievable.
+      </p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/nancy-solanki/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Connection 16 -->
+<div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+  <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+    <!-- Front -->
+    <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+      <img src="https://media.licdn.com/dms/image/v2/D5635AQE_NPKwJbI8PA/profile-framedphoto-shrink_800_800/B56ZlSR78KJ8Ag-/0/1758022058055?e=1762408800&v=beta&t=2uV7Z4d_gs4ds5Nm9RqevYJ-Ory7y2tL1i5l7EkZGFc" alt="Padmajaa Sridhar" class="w-32 h-32 rounded-full object-cover mb-4">
+      <h3 class="text-xl font-semibold text-white">Padmajaa Sridhar</h3>
+      <p class="text-gray-400">Summer'25 Security Engineering Intern @ Atlassian</p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/padmajaa-sridhar/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+      <p class="text-gray-300 text-center">
+        Padmajaa inspired me to join hackathons and focus on learning through every experience.
+      </p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/padmajaa-sridhar/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Connection 17 -->
+<div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+  <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+    <!-- Front -->
+    <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+      <img src="https://media.licdn.com/dms/image/v2/D5603AQGpWc5zUx2wzQ/profile-displayphoto-shrink_800_800/B56ZXau.FEHoAg-/0/1743131503285?e=1763596800&v=beta&t=veiyDiu9wPwAJ048NgxJrW6XFz8C59NSbK1LFnhu4i4" alt="Adarsh Gupta" class="w-32 h-32 rounded-full object-cover mb-4">
+      <h3 class="text-xl font-semibold text-white">Adarsh Gupta</h3>
+      <p class="text-gray-400">Software Engineer @ Apple</p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/adarsh-gupta-vit/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+      <p class="text-gray-300 text-center">
+        Adarsh made me realize how impactful good projects and a clear CV can be in shaping a career.
+      </p>
+      <div class="flex gap-4 mt-4 text-cyan-400">
+        <a href="https://www.linkedin.com/in/adarsh-gupta-vit/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Connection 18 -->
+    <div class="flip-card bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="flip-card-inner transition-transform duration-700 hover:rotate-y-180 relative">
+        <div class="flip-card-front absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+          <img src="https://media.licdn.com/dms/image/v2/D5635AQEilTZ47zt99w/profile-framedphoto-shrink_200_200/B56ZlMSm6RHUAY-/0/1757921570802?e=1762351200&v=beta&t=SZZrL0CDNgtbD3ntBtIduiLqb3cqnp-MYDYSz11jKdo" alt="Saksham Tapadia" class="w-32 h-32 rounded-full object-cover mb-4">
+          <h3 class="text-xl font-semibold text-white">Saksham Tapadia</h3>
+          <p class="text-gray-400">AI Enthusiast | Ex-Celebal</p>
+          <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/saksham-tapadia/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+        <div class="flip-card-back absolute inset-0 backface-hidden rotate-y-180 bg-gray-900 flex flex-col items-center justify-center p-6">
+          <p class="text-gray-300 text-center">Saksham regularly shares learning resources and job openings, helping many like me stay updated.</p>
+           <div class="flex gap-4 mt-4 text-cyan-400">
+            <a href="https://www.linkedin.com/in/saksham-tapadia/" target="_blank" class="hover:scale-110 transition"><i data-lucide="linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
+  </section>
+
+
+
+ <footer class="text-center py-8 opacity-80">
+  Coded with <span style="color: var(--primary-color);" class="animate-pulse">♡</span> by 
+  <strong>Sanidhya Sharma</strong>
+</footer>
+
+
+  <script>
+    const toggleBtn = document.getElementById('themeToggle');
+    const body = document.body;
+    const icon = toggleBtn.querySelector('i');
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('theme-dark');
+      body.classList.toggle('theme-light');
+      const isDark = body.classList.contains('theme-dark');
+      icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+    });
+
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuToggle.classList.toggle('open');
+    });
+
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navMenu.classList.remove('active');
+          menuToggle.classList.remove('open');
+        }
+      });
+    });
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>आभार | Where Gratitude Finds Its Voice</title>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    :root {
+      --primary-color: #06B6D4;
+      --primary-color-darker: #0d9488;
+      --dark-bg: #111827;
+      --dark-text: #e5e7eb;
+      --dark-card: #1f2937;
+      --dark-header-bg: #111827b3;
+      --dark-shadow: rgba(0, 0, 0, 0.2);
+      --light-bg: #f3f4f6;
+      --light-text: #1f2937;
+      --light-card: #ffffff;
+      --light-header-bg: #f3f4f6b3;
+      --light-shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      scroll-behavior: smooth;
+      /* Fix for potential horizontal scroll from content width */
+      overflow-x: hidden; 
+    }
+
+    .theme-dark { background-color: var(--dark-bg); color: var(--dark-text); }
+    .theme-light { background-color: var(--light-bg); color: var(--light-text); }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+
+    .theme-dark header { background-color: var(--dark-header-bg); box-shadow: 0 2px 6px var(--dark-shadow); }
+    .theme-light header { background-color: var(--light-header-bg); box-shadow: 0 2px 6px var(--light-shadow); }
+
+    .logo { font-weight: 700; font-size: 1.3rem; color: var(--primary-color); letter-spacing: 0.5px; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover, nav a.active { color: var(--primary-color); }
+
+    .toggle-btn {
+      background: none;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 1rem;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .toggle-btn:hover { background-color: rgba(6,182,212,0.1); }
+
+    .menu-toggle { display: none; flex-direction: column; cursor: pointer; }
+    .menu-toggle span {
+      width: 25px; height: 3px; background: var(--primary-color);
+      margin: 4px 0; transition: all 0.3s ease;
+    }
+
+    .menu-toggle.open span:nth-child(1) { transform: rotate(-45deg) translate(-5px,6px); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) { transform: rotate(45deg) translate(-5px,-6px); }
+
+    @media (max-width:768px) {
+      header { padding: 0.8rem 1.5rem; }
+      nav {
+        position: fixed;
+        top: 65px; right: -100%;
+        flex-direction: column;
+        /* Using dark-card background for all themes on mobile nav for consistency */
+        background: var(--dark-card); 
+        padding: 1.5rem;
+        border-radius: 10px;
+        width: min(80%,250px);
+        transition: right 0.3s ease;
+        box-shadow: 0 4px 10px var(--dark-shadow);
+      }
+      .theme-light nav { background: var(--light-card); box-shadow: 0 4px 10px var(--light-shadow); }
+      nav.active { right: 15px; }
+      .menu-toggle { display: flex; }
+      nav a { margin: 0.6rem 0; width: 100%; }
+    }
+
+    /* Hero */
+    .hero {
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      min-height: 100vh; /* Use min-height instead of fixed height */
+      text-align: center;
+      padding-top: 6rem;
+    }
+
+    .hero h1 { font-size: clamp(2rem,5vw,3.5rem); margin-bottom: 1rem; }
+    .hero p { font-size: clamp(1rem,2vw,1.2rem); max-width: 700px; line-height: 1.6; }
+
+    .btn {
+      margin-top: 2rem;
+      background-color: var(--primary-color);
+      color: var(--dark-bg);
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover { background-color: var(--primary-color-darker); transform: translateY(-2px); }
+
+    .typing { color: var(--primary-color); font-weight: 600; }
+    .typing-cursor::after {
+      content: ''; width: 3px; height: 1.2em; margin-left: 2px;
+      background-color: var(--primary-color);
+      animation: blink 0.75s step-end infinite;
+      display: inline-block; /* ensures the cursor doesn't affect line height */
+      vertical-align: middle;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* Mentors Section */
+    #mentors {
+      padding: 5rem 1rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    #mentors h2 {
+      font-size: clamp(1.8rem,4vw,2.5rem);
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .timeline { position: relative; }
+    .timeline::after {
+      content: ''; position: absolute; width: 4px;
+      background-color: var(--primary-color);
+      top: 0; bottom: 0; left: 50%;
+      margin-left: -2px;
+    }
+
+    .timeline-container {
+      padding: 1rem 2rem;
+      position: relative;
+      width: 50%;
+      box-sizing: border-box;
+    }
+
+    .timeline-container.left { left: 0; padding-right: 3.5rem; }
+    .timeline-container.right { left: 50%; padding-left: 3.5rem; }
+
+    .timeline-container::before {
+      content: ''; position: absolute; width: 16px; height: 16px;
+      background-color: var(--primary-color);
+      border-radius: 50%; top: 30px; z-index: 1;
+      border: 4px solid;
+    }
+    .theme-dark .timeline-container::before { border-color: var(--dark-bg); }
+    .theme-light .timeline-container::before { border-color: var(--light-bg); }
+
+    .timeline-container.right::before { left: 50%; transform: translateX(-50%); margin-left: -2px; } /* Updated for better centering on the line */
+    .timeline-container.left::before { right: 50%; transform: translateX(50%); margin-right: -2px; } /* Updated for better centering on the line */
+    /* Adjusting specific position on the line */
+    .timeline-container.right::before { left: calc(50% - 8px); }
+    .timeline-container.left::before { right: calc(50% - 8px); }
+
+    .content {
+      background-color: var(--dark-card);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px var(--dark-shadow);
+      text-align: center;
+    }
+
+    .theme-light .content {
+      background-color: var(--light-card);
+      box-shadow: 0 4px 12px var(--light-shadow);
+    }
+
+    .mentor-img {
+      width: 100px; height: 100px;
+      border-radius: 50%; object-fit: cover;
+      margin-bottom: 10px;
+      border: 3px solid var(--primary-color);
+      box-shadow: 0 4px 10px var(--dark-shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .theme-light .mentor-img { box-shadow: 0 4px 10px var(--light-shadow); }
+
+    .mentor-img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(6,182,212,0.6);
+    }
+
+    .mentor-role { font-size: 0.9rem; color: #9ca3af; font-style: italic; }
+
+    /* **FIX FOR RESPONSIVENESS AND HORIZONTAL SCROLL** */
+    @media (max-width:768px) {
+      .timeline::after { left: 20px; } /* Move timeline line to the left */
+      
+      .timeline-container {
+        width: 100%; /* Take full width */
+        padding-left: 3.5rem; /* Space for the line and dot */
+        padding-right: 1rem;
+      }
+      
+      .timeline-container.left, .timeline-container.right {
+        left: 0; /* Align all containers to the left */
+        padding-right: 1rem; /* Reset right padding */
+        padding-left: 3.5rem; /* Standard left padding for dot */
+      }
+      
+      .timeline-container::before { 
+        left: 16px; /* Position dot near the line */
+        right: auto; /* Reset right position */
+        transform: none; /* Reset transform */
+      }
+    }
+
+    /* Fade-in Animation */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+    .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+    footer { text-align: center; padding: 1rem; font-size: 0.9rem; opacity: 0.8; /* box-sizing: border-box; */ width: 100%; }
+    .heart {
+      color: var(--primary-color);
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    @media (max-width: 768px) {
+  .logo {
+    font-size: 1rem;
+    max-width: 70%;
+    word-wrap: break-word;
+    margin-right: 2rem;
+  }
+
+  header {
+    padding: 0.8rem 1rem;
+  }
+}
+
+  </style>
+</head>
+
+<body class="theme-dark">
+  <header>
+    <div class="logo">आभार — Where Gratitude Finds Its Voice</div>
+    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="mentor.html">Mentors</a>
+      <a href="tribute.html">Tribute</a>
+      <button class="toggle-btn" id="themeToggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </nav>
+  </header>
+
+  <section class="hero fade-in" id="hero">
+    <h1>Inspired by Mentors. Built by Learners.</h1>
+    <p>Discover stories, wisdom, and resources from mentors who shaped the next generation — starting with <span class="typing typing-cursor" id="typing"></span>.</p>
+    <a href="#mentors" class="btn">Meet the Mentors</a>
+  </section>
+
+  <section id="mentors" class="fade-in">
+    <h2 class="text-3xl font-bold text-center mb-10 text-cyan-400 animate-pulse">
+      The Code That Built Me
+    </h2>
+
+    <div class="timeline">
+
+      <div class="timeline-container left fade-in">
+        <div class="content text-center">
+          <a href="mentor.html">
+            <img 
+              src="https://media.licdn.com/dms/image/v2/C4D03AQGFTnOaQa4fUQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1623400654607?e=1763596800&v=beta&t=Frn9X9ctBZharbcJSUQUCy4_CIz7LM6TZ_z7VttI0BY" 
+              alt="Striver (Raj Vikramaditya)" 
+              class="mentor-img mx-auto"
+            >
+          </a>
+          <p class="mentor-role">Founder, Take U Forward</p>
+          <h3>Striver (Raj Vikramaditya)</h3>
+        </div>
+      </div>
+
+      <div class="timeline-container right fade-in">
+        <div class="content text-center">
+          <a href="mentor.html">
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D5603AQH3OXCs5a05Og/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1706903307026?e=1763596800&v=beta&t=iN5H8RsCypAVPHikwk7BsU-jHY5u7sZiQZpkqZA8pNw" 
+              alt="Arsh Goyal" 
+              class="mentor-img mx-auto"
+            >
+          </a>
+          <p class="mentor-role">Software Engineer & Educator</p>
+          <h3>Arsh Goyal</h3>
+        </div>
+      </div>
+
+      <div class="timeline-container left fade-in">
+        <div class="content text-center">
+          <a href="mentor.html">
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D5603AQH4L8B4muZ2eg/profile-displayphoto-shrink_800_800/B56ZaMpdTxHAAg-/0/1746116401181?e=1763596800&v=beta&t=AvBd9ah3B_I3l_9yf8xnjjsueGeaAkScyp0uyWSS0m4" 
+              alt="Khushal Vijay" 
+              class="mentor-img mx-auto"
+            >
+          </a>
+          <p class="mentor-role">Software Engineer & YouTuber</p>
+          <h3>Kushal Vijay</h3>
+        </div>
+      </div>
+
+      <div class="timeline-container right fade-in">
+        <div class="content text-center">
+          <a href="mentor.html">
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D5603AQF-INQX5DiLEw/profile-displayphoto-shrink_200_200/B56ZgIDZ_PGUAc-/0/1752481771806?e=1763596800&v=beta&t=SfxJaJGNEDEFNB82MIi1LjdmXiaSYJIvul5TZQPlYEM" 
+              alt="Shradha Khapra" 
+              class="mentor-img mx-auto"
+            >
+          </a>
+          <p class="mentor-role">Co-Founder, Apna College</p>
+          <h3>Shradha Khapra</h3>
+        </div>
+      </div>
+
+      
+      <div class="timeline-container left fade-in">
+        <div class="content text-center">
+          <a href="mentor.html">
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D5603AQGK1b2Cqjs2rA/profile-displayphoto-shrink_800_800/B56ZcRn.tXHgAc-/0/1748347385376?e=1763596800&v=beta&t=L7s6MxUvK6M9taORMnhjuMz3gPX3wm1Ii1O4DauI2dA" 
+              alt="Rohit Negi" 
+              class="mentor-img mx-auto"
+            >
+          </a>
+          <p class="mentor-role">Founder of Coder Army</p>
+          <h3>Rohit Negi</h3>
+        </div>
+      </div>
+
+      <div class="timeline-container right fade-in">
+        <div class="content text-center">
+          <a href="mentor.html">
+            <img 
+              src="http://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" 
+              alt="All LinkedIn Connections" 
+              class="mentor-img mx-auto"
+            >
+          </a>
+          <p class="mentor-role">Digital Mentors</p>
+          <h3>LinkedIn Connections</h3>
+        </div>
+      </div>
+
+      <div class="timeline-container left fade-in">
+  <div class="content text-center">
+    <a href="tribute.html">
+      <img 
+        src="http://btu.ac.in/BTU/wp-content/uploads/2019/04/fulllogo.jpg" 
+        alt="Academic Mentors" 
+        class="mentor-img mx-auto"
+      >
+    </a>
+    <p class="mentor-role">University Guidance</p>
+    <h3>Academic Mentors</h3>
+  </div>
+</div>
+
+
+    </div>
+  </section>
+<footer class="text-center py-8 opacity-80">
+  Coded with <span style="color: var(--primary-color);" class="animate-pulse">♡</span> by 
+  <strong>Sanidhya Sharma</strong>
+</footer>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = toggleBtn.querySelector('i');
+        const timelineContainers = document.querySelectorAll('.timeline-container::before');
+
+        // Initial theme setup on load
+        const isDark = body.classList.contains('theme-dark');
+        icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('theme-dark');
+            body.classList.toggle('theme-light');
+            const isDark = body.classList.contains('theme-dark');
+            icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+        });
+
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('open');
+        });
+
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('open');
+                }
+            });
+        });
+
+        // Typing effect
+        const typingEl = document.getElementById("typing");
+        const words = ["Striver", "Shradha Khapra","Khushal Vijay","Arsh Goyal", "Khushboo Sharma","Rohit Negi","LinkedIn Connections","Academic Mentors" ];
+        let wordIndex = 0, charIndex = 0, isDeleting = false;
+
+        function typeEffect() {
+            const word = words[wordIndex];
+            typingEl.textContent = word.substring(0, charIndex);
+            
+            // Re-adding the cursor class every cycle to ensure it's on the visible span
+            typingEl.classList.add('typing-cursor');
+
+            if (!isDeleting && charIndex < word.length) {
+                charIndex++; setTimeout(typeEffect, 120);
+            } else if (isDeleting && charIndex > 0) {
+                charIndex--; setTimeout(typeEffect, 70);
+            } else {
+                isDeleting = !isDeleting;
+                if (!isDeleting) {
+                    wordIndex = (wordIndex + 1) % words.length;
+                }
+                setTimeout(typeEffect, isDeleting ? 1000 : 200);
+            }
+        }
+        typeEffect();
+
+        // Intersection Observer for fade-in animation
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    });
+  </script>
+
+  
+</body>
+</html>
+
+
